@@ -1,0 +1,134 @@
+{
+  "first_name": "Alex",
+  "middle_name": "",
+  "last_name": "Rivera",
+  "preferred_name": "Alex",
+  "email": "alex.rivera@example.com",
+  "phone": "+1 415 555 0132",
+  "phone_country": "United States",
+  "phone_type": "Mobile",
+  "date_of_birth": "",
+  "address": {
+    "line1": "500 Example Street",
+    "line2": "",
+    "city": "San Francisco",
+    "state": "California",
+    "postal_code": "94105",
+    "country": "United States"
+  },
+  "links": {
+    "linkedin": "https://www.linkedin.com/in/alex-rivera-example",
+    "github": "https://github.com/alex-rivera-example",
+    "portfolio": "https://alexrivera.example.com",
+    "twitter": "",
+    "other": ""
+  },
+  "current_company": "Northwind Labs",
+  "current_title": "Senior Software Engineer",
+  "years_experience": "7",
+  "summary": "Backend-leaning full-stack engineer with 7 years building data-heavy web products.",
+  "skills": [
+    "TypeScript",
+    "Python",
+    "PostgreSQL",
+    "React",
+    "AWS",
+    "Kubernetes"
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect - Associate"
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "Native"
+    },
+    {
+      "language": "Spanish",
+      "proficiency": "Conversational"
+    }
+  ],
+  "highest_degree": "Bachelor's Degree",
+  "graduation_year": "2018",
+  "education": [
+    {
+      "school": "University of California, Berkeley",
+      "degree": "Bachelor's Degree",
+      "field": "Computer Science",
+      "start": "2014-08",
+      "end": "2018-05",
+      "gpa": "3.7"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Northwind Labs",
+      "title": "Senior Software Engineer",
+      "location": "San Francisco, CA",
+      "start": "2021-03",
+      "end": "",
+      "current": true,
+      "description": "Led the rebuild of the reporting pipeline on Postgres and Kafka, cutting report latency from minutes to seconds. Mentored four engineers."
+    },
+    {
+      "company": "Contoso Systems",
+      "title": "Software Engineer",
+      "location": "Oakland, CA",
+      "start": "2018-07",
+      "end": "2021-02",
+      "current": false,
+      "description": "Built internal billing APIs in Python and a React admin console used by the finance team."
+    }
+  ],
+  "work_authorization": {
+    "citizenship": "United States",
+    "visa_status": "US citizen",
+    "visa_expiry": "",
+    "authorized_us": true,
+    "authorized_countries": [
+      "United States"
+    ],
+    "needs_sponsorship": false,
+    "needs_sponsorship_in_future": false
+  },
+  "preferences": {
+    "salary_expectation": "180000",
+    "salary_currency": "USD",
+    "current_salary": "",
+    "notice_period": "2 weeks",
+    "earliest_start_date": "2026-11-16",
+    "work_mode": "Hybrid",
+    "employment_type": "Full-time",
+    "preferred_locations": [
+      "San Francisco Bay Area",
+      "Remote (US)"
+    ],
+    "willing_to_relocate": false,
+    "willing_to_travel": true,
+    "travel_percent": "10"
+  },
+  "screening": {
+    "over_18": true,
+    "drivers_license": true,
+    "background_check_ok": true,
+    "drug_test_ok": true,
+    "non_compete": false,
+    "worked_here_before": false,
+    "relatives_at_company": false,
+    "security_clearance": "None"
+  },
+  "how_did_you_hear": "LinkedIn",
+  "referral_name": "",
+  "notes": "Looking for a senior backend role on a product team. Proudest work: rebuilding the reporting pipeline at Northwind Labs. Prefer small teams with real ownership.",
+  "eeo": {
+    "gender": "",
+    "race": "",
+    "hispanic": "",
+    "veteran": "",
+    "disability": "",
+    "sexual_orientation": "",
+    "transgender": "",
+    "pronouns": ""
+  },
+  "resume_text": "Alex Rivera. Senior Software Engineer, Northwind Labs (2021-present): rebuilt reporting pipeline on Postgres and Kafka, report latency from 4 minutes to 6 seconds; designed multi-tenant billing service in TypeScript on AWS (ECS, RDS); mentored four engineers; on-call lead. Software Engineer, Contoso Systems (2018-2021): internal billing APIs in Python (FastAPI), React admin console for finance team of 30, migrated cron jobs to Kubernetes."
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- A server-rendered style form (like iCIMS): choosing a country or uploading a resume
+     reloads the whole page. The page keeps typed values across reloads, as a server
+     would, and counts how many times it has loaded. -->
+<html lang="en"><head><meta charset="utf-8"><title>Job application - candidate profile</title>
+<style>body{font:14px system-ui;max-width:520px;margin:24px auto} label{display:block;font-weight:600;margin:12px 0 4px} input[type=text],select{width:100%;padding:6px;box-sizing:border-box}</style></head>
+<body>
+<h2>Candidate profile</h2>
+<p>Page loads: <b id="loads"></b></p>
+<label for="fn">First Name*</label><input type="text" id="fn">
+<label for="co">Country*</label><select id="co"><option value="">-- Select --</option><option>Canada</option><option>United States</option></select>
+<label for="ln">Last Name*</label><input type="text" id="ln">
+<label for="em">Email*</label><input type="text" id="em">
+<label for="ci">City*</label><input type="text" id="ci">
+<label for="cv">Resume*</label><input type="file" id="cv">
+<script>
+const kept = JSON.parse(sessionStorage.form || '{}');
+sessionStorage.loads = (+sessionStorage.loads || 0) + 1;
+loads.textContent = sessionStorage.loads;
+const save = () => (sessionStorage.form = JSON.stringify(kept));
+for (const id of ['fn', 'ln', 'em', 'ci', 'co']) {
+  const el = document.getElementById(id);
+  el.value = kept[id] || '';
+  el.addEventListener('input', () => { kept[id] = el.value; save(); });
+}
+co.addEventListener('change', () => { kept.co = co.value; save(); location.reload(); });
+cv.addEventListener('change', () => { kept.resume = cv.files[0]?.name; save(); location.reload(); });
+window.snapshot = () => ({ loads: +sessionStorage.loads, ...kept });
+</script>
+</body></html>

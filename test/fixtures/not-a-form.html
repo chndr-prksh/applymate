@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- Pages that are NOT job applications but used to trigger the extension: a mail
+     compose window with an attachment button, and a job search page. Each field
+     records whether anything wrote into it. -->
+<html lang="en"><head><meta charset="utf-8"><title>Inbox (3) - job alerts - Mail</title></head>
+<body>
+<h2 id="mode"></h2>
+<div id="mail">
+  <label for="to">To</label><input type="text" id="to">
+  <label for="cc">Cc</label><input type="text" id="cc">
+  <label for="subject">Subject</label><input type="text" id="subject">
+  <label for="body">Message</label><textarea id="body"></textarea>
+  <label for="att">Attach files</label><input type="file" id="att">
+</div>
+<div id="search" hidden>
+  <label for="q">Search by title, skill, or company</label><input type="text" id="q">
+  <label for="loc">City, state, or zip code</label><input type="text" id="loc">
+  <label for="date">Date posted</label><select id="date"><option value="">Any time</option><option>Past week</option></select>
+  <label for="exp">Experience level</label><select id="exp"><option value="">Any</option><option>Senior</option></select>
+  <label for="co">Company</label><input type="text" id="co">
+</div>
+<script>
+if (location.search.includes('search')) { mail.hidden = true; search.hidden = false; document.title = 'Senior AI product manager jobs | Job search'; history.replaceState(null, '', '/jobs/search-results/?keywords=senior%20ai%20product%20manager'); }
+window.touched = () => [...document.querySelectorAll('input,textarea,select')].filter((e) => e.type === 'file' ? e.files.length : e.value).map((e) => e.id);
+</script>
+</body></html>

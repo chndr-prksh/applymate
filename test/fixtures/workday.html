@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- A two-step form built the way Workday builds its widgets (button dropdowns, split
+     date boxes, Enter-to-search pickers). It is a stand-in written from memory of
+     Workday's markup, not a copy of a real page. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Senior Software Engineer - Workday</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"JobPosting","title":"Senior Software Engineer","hiringOrganization":{"@type":"Organization","name":"Fixture Corp"},
+ "description":"<p>Build and run the billing platform. You will work in TypeScript and PostgreSQL on AWS, own services end to end, and mentor other engineers.</p>"}
+</script>
+<style>
+  body { font: 14px system-ui; max-width: 640px; margin: 24px auto; }
+  [data-automation-id^="formField"] { margin: 14px 0; } label, legend { display: block; font-weight: 600; margin-bottom: 4px; }
+  input[type=text] { width: 100%; padding: 6px; box-sizing: border-box; } [data-automation-id=dateInputWrapper] input { width: 60px; }
+  button[aria-haspopup] { padding: 6px 10px; min-width: 240px; text-align: left; }
+  ul[role=listbox], .prompt { border: 1px solid #999; padding: 0; margin: 0; list-style: none; background: #fff; width: 320px; }
+  [role=option], [data-automation-id=promptOption] { padding: 6px 10px; cursor: pointer; } .pill { background: #dde; padding: 2px 8px; border-radius: 10px; }
+</style>
+</head>
+<body>
+<h2 id="step"></h2>
+<form id="form" onsubmit="return false"></form>
+<button id="next" data-automation-id="bottom-navigation-next-button">Save and Continue</button>
+<script>
+const text = (id, label, req) => `<div data-automation-id="formField-${id}"><label for="${id}">${label}${req ? '*' : ''}</label><input type="text" id="${id}" data-automation-id="${id}" ${req ? 'aria-required="true"' : ''}></div>`;
+const drop = (id, label, options) => `<div data-automation-id="formField-${id}"><label for="${id}">${label}*</label><button type="button" id="${id}" aria-haspopup="listbox" aria-label="${label} select one required" data-options="${options.join('|')}">select one</button></div>`;
+const date = (id, label, parts) => `<div data-automation-id="formField-${id}"><label id="${id}-label">${label}*</label><div data-automation-id="dateInputWrapper" role="group" aria-labelledby="${id}-label">${parts.map((p) => `<input type="text" role="spinbutton" data-automation-id="dateSection${p}-input" aria-label="${p}" placeholder="${p === 'Year' ? 'YYYY' : p === 'Month' ? 'MM' : 'DD'}">`).join(' / ')}</div></div>`;
+const radio = (id, label, options) => `<fieldset data-automation-id="formField-${id}"><legend>${label}*</legend>${options.map((o, i) => `<input type="radio" name="${id}" id="${id}${i}" value="${o}"><label for="${id}${i}" style="display:inline;font-weight:400">${o}</label> `).join('')}</fieldset>`;
+const search = (id, label, options) => `<div data-automation-id="formField-${id}"><label for="${id}">${label}*</label><div data-automation-id="multiselectInputContainer"><span class="pills"></span><input type="text" id="${id}" data-automation-id="searchBox" placeholder="Search" data-options="${options.join('|')}"></div></div>`;
+
+const STEPS = [
+  ['My Information',
+    drop('source', 'How Did You Hear About Us?', ['Company Website', 'LinkedIn', 'Referral']) +
+    radio('prior', 'Have you previously worked for Fixture Corp?', ['Yes', 'No']) +
+    drop('country', 'Country', ['Canada', 'United Kingdom', 'United States of America']) +
+    text('legalNameSection_firstName', 'First Name', 1) + text('legalNameSection_lastName', 'Last Name', 1) +
+    text('addressSection_addressLine1', 'Address Line 1', 1) + text('addressSection_city', 'City', 1) +
+    drop('addressSection_countryRegion', 'State', ['California', 'New York', 'Texas']) +
+    text('addressSection_postalCode', 'Postal Code', 1) + text('email', 'Email Address', 1) +
+    drop('phone-device-type', 'Phone Device Type', ['Landline', 'Mobile']) + text('phone-number', 'Phone Number', 1)],
+  ['Application Questions',
+    '<h4>Work Experience 1</h4>' + text('jobTitle', 'Job Title', 1) + text('company', 'Company', 1) + date('from', 'From', ['Month', 'Year']) +
+    '<div data-automation-id="formField-roleDescription"><label for="roleDescription">Role Description</label><textarea id="roleDescription" rows="4" style="width:100%"></textarea></div>' +
+    '<h4>Resume/CV</h4><div data-automation-id="formField-resume"><label for="resumeUpload">Upload your resume</label><input type="file" id="resumeUpload" data-automation-id="file-upload-input-ref"></div>' +
+    '<h4>Education 1</h4>' + search('school', 'School or University', ['Stanford University', 'University of California - Los Angeles', 'University of California - Berkeley', 'University of Texas']) +
+    search('degree', 'Degree', ['Associate of Arts (A.A.)', 'Bachelor of Science (B.S.)', 'Master of Science (M.S.)', 'Doctor of Philosophy (Ph.D.)']) +
+    search('fieldOfStudy', 'Field of Study', ['Mathematics', 'Computational Linguistics', 'Computing and Information Sciences']) +
+    '<h4>Questions</h4>' +
+    drop('q1', 'Are you legally permitted to work in the country where this job is located without restriction?', ['Yes', 'No']) +
+    drop('q2', 'Would you need the company to file any immigration petition for you to start or keep working here?', ['Yes', 'No']) +
+    date('start', 'Available Start Date', ['Month', 'Day', 'Year']) +
+    '<div data-automation-id="formField-rate"><label for="rate">Rate your hands-on experience with billing systems (1-5)*</label><input type="number" id="rate" min="1" max="5"></div>' +
+    '<div data-automation-id="formField-why"><label for="why">Why are you interested in this role?*</label><textarea id="why" rows="4" style="width:100%"></textarea></div>'],
+];
+let step = 0;
+function show() {
+  document.getElementById('step').textContent = STEPS[step][0];
+  document.getElementById('form').innerHTML = STEPS[step][1];
+  document.getElementById('next').textContent = step < STEPS.length - 1 ? 'Save and Continue' : 'Submit';
+  // ?prefilled=1 imitates an account that carries answers over from an earlier application.
+  if (location.search.includes('prefilled')) {
+    const old = { legalNameSection_firstName: 'Oldfirst', addressSection_city: 'Seattle', addressSection_postalCode: '98101', jobTitle: 'Old Title From Last Time', company: 'Old Company', roleDescription: 'Old description from a previous application.' };
+    for (const [id, v] of Object.entries(old)) if (document.getElementById(id)) document.getElementById(id).value = v;
+    const state = document.getElementById('addressSection_countryRegion');
+    if (state) state.textContent = 'Texas';
+  }
+}
+document.getElementById('next').onclick = () => {
+  if (step < STEPS.length - 1) { step++; show(); return; }
+  document.body.innerHTML = '<h2>Thank you for applying</h2><p>Your application has been submitted.</p>';
+};
+const closePopups = () => document.querySelectorAll('ul[role=listbox], .prompt').forEach((p) => p.remove());
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[aria-haspopup]');
+  const opt = e.target.closest('[role=option]');
+  const prompt = e.target.closest('[data-automation-id=promptOption]');
+  if (btn) {
+    closePopups();
+    const ul = document.createElement('ul');
+    ul.setAttribute('role', 'listbox');
+    ul.owner = btn;
+    ul.innerHTML = btn.dataset.options.split('|').map((o) => `<li role="option">${o}</li>`).join('');
+    document.body.append(ul);
+  } else if (opt) {
+    opt.parentElement.owner.textContent = opt.textContent;
+    closePopups();
+  } else if (prompt) {
+    const input = prompt.parentElement.owner;
+    input.parentElement.querySelector('.pills').innerHTML = `<span class="pill multiValue">${prompt.textContent}</span>`;
+    input.value = '';
+    closePopups();
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePopups();
+  if (e.key !== 'Enter' || !e.target.matches?.('[data-automation-id=searchBox]')) return;
+  closePopups();
+  const box = document.createElement('div');
+  box.className = 'prompt';
+  box.owner = e.target;
+  const q = e.target.value.toLowerCase();
+  box.innerHTML = e.target.dataset.options.split('|').filter((o) => o.toLowerCase().includes(q)).map((o) => `<div data-automation-id="promptOption">${o}</div>`).join('');
+  document.body.append(box);
+});
+show();
+</script>
+</body>
+</html>

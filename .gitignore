@@ -1,0 +1,9 @@
+node_modules/
+# Built by `npm run build` from src/; rebuild after cloning.
+dist/
+# Test screenshots and outputs.
+test/out/
+# Your personal data: profile, resume text and the tailored resumes made from it.
+tailored-resumes/
+*.zip
+.DS_Store

@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "ApplyMate",
+  "version": "0.9.4",
+  "description": "Fills the job application form in front of you from your profile and resume. You review and submit.",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/page.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/scan.js",
+        "content/rules.js",
+        "content/fill.js",
+        "content/panel.js",
+        "content/main.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "ApplyMate: fill this form (Alt+Shift+F)"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "fill": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Fill the form on this page"
+    }
+  }
+}

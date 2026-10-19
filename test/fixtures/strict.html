@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- Fields that behave like the stricter form libraries: they only accept a value
+     after seeing the events a person produces (focus, a keystroke, blur), and tick
+     boxes / radios that are custom widgets rather than real inputs. Each field records
+     what the page itself believes in window.state. -->
+<html lang="en">
+<head><meta charset="utf-8"><title>Job application - strict form</title>
+<style>body{font:14px system-ui;max-width:560px;margin:24px auto} label{display:block;font-weight:600;margin:14px 0 4px} [role=radio],[role=checkbox]{display:inline-block;border:1px solid #888;padding:4px 10px;margin-right:6px;cursor:pointer} [aria-checked=true]{background:#cde}</style></head>
+<body>
+<h2>Application</h2>
+<label for="fn">First Name*</label><input id="fn" type="text">
+<label for="ln">Last Name*</label><input id="ln" type="text">
+<label for="em">Email*</label><input id="em" type="text">
+<label for="ci">City*</label><input id="ci" type="text">
+<label id="tl">Are you willing to travel?*</label>
+<div role="radiogroup" aria-labelledby="tl"><div role="radio" aria-checked="false" tabindex="0">Yes</div><div role="radio" aria-checked="false" tabindex="0">No</div></div>
+<label id="dl">Driver's license</label>
+<button type="button" role="checkbox" aria-checked="false" aria-labelledby="dl2" id="dlb"></button> <span id="dl2">I have a valid driver's license</span>
+<script>
+window.state = { focused: document.hasFocus() };
+// First name: accepted only when the field is left (blur), like commit-on-blur forms.
+fn.addEventListener('blur', () => (state.firstName = fn.value));
+// Last name: needs focus first, then accepted on focusout.
+let lnTouched = false;
+ln.addEventListener('focusin', () => (lnTouched = true));
+ln.addEventListener('focusout', () => lnTouched && (state.lastName = ln.value));
+// Email: only input that follows a keystroke counts.
+let key = false;
+em.addEventListener('keydown', () => (key = true));
+em.addEventListener('input', () => { if (key) state.email = em.value; key = false; });
+// With ?late=1 the form "finishes loading" 3 s in and wipes what was entered so far.
+if (location.search.includes('late')) setTimeout(() => { for (const el of [fn, ln, em, ci]) el.value = ''; delete state.firstName; delete state.lastName; delete state.email; delete state.city; state.wiped = true; }, 3000);
+// City: plain input event.
+ci.addEventListener('input', () => (state.city = ci.value));
+for (const r of document.querySelectorAll('[role=radio]')) r.addEventListener('click', () => {
+  document.querySelectorAll('[role=radio]').forEach((o) => o.setAttribute('aria-checked', String(o === r)));
+  state.travel = r.textContent;
+});
+// The custom tick box only reacts to a full press (mousedown then click).
+let pressed = false;
+dlb.addEventListener('mousedown', () => (pressed = true));
+dlb.addEventListener('click', () => { if (!pressed) return; pressed = false; const on = dlb.getAttribute('aria-checked') !== 'true'; dlb.setAttribute('aria-checked', String(on)); state.license = on; });
+</script>
+</body></html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- A posting in a different city from the applicant's, with location fields on the form. -->
+<html lang="en"><head><meta charset="utf-8"><title>Job application - Product Manager</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"JobPosting","title":"Product Manager, Search","hiringOrganization":{"@type":"Organization","name":"Fixture Sports"},
+ "jobLocation":[{"@type":"Place","address":{"addressLocality":"Atlanta","addressRegion":"Georgia","addressCountry":"United States"}},{"@type":"Place","address":{"addressLocality":"New York City","addressRegion":"NY","addressCountry":"United States"}}],
+ "description":"<p>Own search and discovery for a consumer app. Ranking, relevance and experimentation.</p>"}
+</script>
+<style>body{font:14px system-ui;max-width:520px;margin:24px auto} label{display:block;font-weight:600;margin:12px 0 4px} input[type=text],select{width:100%;padding:6px;box-sizing:border-box}</style></head>
+<body><h2>Apply</h2>
+<label for="fn">First Name*</label><input type="text" id="fn">
+<label for="ln">Last Name*</label><input type="text" id="ln">
+<label for="em">Email*</label><input type="text" id="em">
+<label for="ci">City*</label><input type="text" id="ci">
+<label for="st">State*</label><select id="st"><option value="">-- Select --</option><option>California</option><option>Georgia</option><option>New York</option></select>
+<label for="zp">ZIP Code*</label><input type="text" id="zp">
+<label for="co">Country*</label><input type="text" id="co">
+<label for="ad">Street Address</label><input type="text" id="ad">
+<label for="cv">Resume*</label><input type="file" id="cv">
+</body></html>
