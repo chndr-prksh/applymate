@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "esbuild src/background.js --bundle --format=esm --target=chrome120 --outfile=dist/background.js",
-    "test": "npm run build && node test/run.mjs"
+    "test": "npm run build && node test/run.mjs",
+    "package": "sh tools/package.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",

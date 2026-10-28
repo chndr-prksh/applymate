@@ -7,3 +7,4 @@ test/out/
 tailored-resumes/
 *.zip
 .DS_Store
+build/

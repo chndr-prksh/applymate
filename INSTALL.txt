@@ -1,0 +1,36 @@
+ApplyMate: fills job applications for you and tailors your resume to each job
+=========================================================================
+
+Install (about 5 minutes, Chrome on Mac or Windows)
+1. Unzip this file. Keep the folder somewhere permanent (for example Documents);
+   Chrome loads the extension from it, so do not delete or move it later.
+2. Open Chrome and go to chrome://extensions
+3. Turn on "Developer mode" (top right).
+4. Click "Load unpacked" and choose the unzipped "applymate-..." folder.
+5. The ApplyMate settings page opens. Fill in:
+   - Claude API key: create one at https://console.anthropic.com (you pay Anthropic
+     directly; a typical application costs a few cents).
+   - Your profile: work through the sections, or upload your resume PDF and click
+     "Import profile from resume" to fill most of it in automatically.
+   - Your resume PDF, under "Resume".
+   - Work authorization and preferences: these answer the visa and logistics questions.
+   Click Save.
+
+Use
+- Open a job posting, then click Apply. When the application form appears, ApplyMate
+  fills it and a panel at the bottom right shows what it filled and what needs you.
+- Blue dots mean "check this". Nothing is ever submitted for you.
+- If it cannot find the job description it asks you for the posting link.
+- Shortcut: Alt+Shift+F fills the current page.
+- Settings also has your application tracker (with the exact resume sent to each job,
+  exportable to Excel) and a log of every request sent to Claude.
+
+Privacy
+- Your profile, resume and answers are stored only in your own Chrome.
+- Text is sent to Anthropic's API (with your key) only to answer questions and rewrite
+  your resume. You can answer form questions with a free local model instead
+  (settings: "Who answers form questions", needs Ollama).
+
+Update
+- Replace the folder's contents with a newer version, then click the reload icon on
+  the ApplyMate card in chrome://extensions.
