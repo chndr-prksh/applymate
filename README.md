@@ -2,7 +2,11 @@
 
 Chrome extension that fills the job application form in front of you from your profile and resume, tailors your resume to each job, and tracks what you applied to. It never clicks Next or Submit.
 
-## Set up
+## Download
+
+Get the ready-to-install extension from **https://chndr-prksh.github.io/applymate/** (or the latest release on GitHub) and follow the install steps there.
+
+## Set up from source
 
 ```bash
 npm install
@@ -40,3 +44,12 @@ node test/quiet.mjs
 ```
 
 `MOCK_AI=1` uses a local stand-in for the Claude API, so no key is needed.
+
+## Releasing
+
+```bash
+npm run package
+gh release create v<version> build/applymate-<version>.zip build/applymate.zip
+```
+
+(`cp build/applymate-<version>.zip build/applymate.zip` first: the download page links to `releases/latest/download/applymate.zip`.)
